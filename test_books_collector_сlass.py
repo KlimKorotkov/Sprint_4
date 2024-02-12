@@ -84,7 +84,7 @@ class TestBooksCollector:
         collector = BooksCollector()
         book_name = 'Book'
         collector.add_new_book(book_name)
-        collector.set_book_genre(book_name, 'Ужасы')
+        collector.set_book_genre(book_name, 'Фантастика')
 
         collector.add_book_in_favorites(book_name)
 
