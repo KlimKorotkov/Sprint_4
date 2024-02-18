@@ -11,15 +11,16 @@ class TestBooksCollector:
         assert '' not in collector.get_books_genre()
 
 
-    def test_set_book_genre_set_existing_book(self):
+    def test_set_book_genre_set_new_genre(self):
         collector = BooksCollector()
         collector.add_new_book('Existing Book')
         collector.set_book_genre('Existing Book', 'Ужасы')
 
         genre = 'Фантастика'
         collector.set_book_genre('Existing Book', genre)
+        new_genre = collector.get_book_genre('Existing Book')
 
-        assert collector.books_genre['Existing Book'] == genre
+        assert new_genre == genre
 
 
     def test_get_book_genre_one_book(self):
@@ -103,9 +104,11 @@ class TestBooksCollector:
         assert book_name not in collector.favorites
 
 
-    @pytest.mark.parametrize('expected_favorites', [['Book1'], ['Book2'], ['Book3']])
+    @pytest.mark.parametrize('expected_favorites', [('Book1'), ('Book2'), ('Book3')])
     def test_get_list_of_favorites_books(self, expected_favorites):
         collector = BooksCollector()
-        collector.favorites = expected_favorites
+        collector.add_new_book(expected_favorites)
+        collector.set_book_genre(expected_favorites, 'Ужасы')
+        collector.add_book_in_favorites(expected_favorites)
 
-        assert collector.get_list_of_favorites_books() == expected_favorites
+        assert expected_favorites in collector.get_list_of_favorites_books()
